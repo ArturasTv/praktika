@@ -1,0 +1,44 @@
+<script  defer>
+   let url = document.URL;
+   let id = url.split("/");
+   id = id[id.length-1];
+
+   async function getData(){
+      let result = await fetch(`http://localhost:3000/users/${id}`)
+      .then(response => response.json())
+      .then(data => {return data} );
+      return result;
+  }
+
+  async function generate_carousel(){
+    let list = await getData();
+
+    let carousel = document.getElementById("carousel-body");
+
+    let n = list.length;
+    for(let i=0;i<n;i++){
+        let item = document.createElement("div");
+       if(i==0) item.classList.add("carousel-item", "active");
+       if(i!=0) item.classList.add("carousel-item");
+       let img = document.createElement("img");
+       img.classList.add("d-block", "w-100");
+       img.src = `${list[i].static}`;
+       item.appendChild(img);
+        carousel.appendChild(item);
+    }
+  }
+
+  generate_carousel();
+</script>
+<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner" id="carousel-body">
+
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
