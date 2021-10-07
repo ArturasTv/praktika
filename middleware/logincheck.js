@@ -13,7 +13,7 @@ module.exports = function (request, response, next) {
   if (request.session.passport && request.path === "/login") {
     response.redirect("/home");
   }
-  if (!request.session.passport && request.path != "/login") {
+  if (!request.session.passport && request.path !== "/login") {
     response.redirect("/login");
   } else {
     next();
